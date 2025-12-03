@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Hostel Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ---------- Global ---------- */
+    :root {
+      --primary: #0f62fe;
+      --muted: #7b8794;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --accent: #ff7a59;
+      --success: #27ae60;
+      --danger: #e74c3c;
+      --radius: 10px;
+      --maxwidth: 1100px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #f5f8fb 0%, #eef3fb 100%);
+      color:#1f2d3d;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    header {
+      background: linear-gradient(90deg,var(--primary), #0068d1);
+      color:white;
+      padding:22px 20px;
+      box-shadow: 0 6px 18px rgba(12,41,80,0.08);
+    }
+    header .wrap { max-width:var(--maxwidth); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    header h1 { margin:0; font-size:20px; letter-spacing:0.2px; }
+    header p { margin:0; opacity:0.9; font-size:13px; }
+
+    nav { max-width:var(--maxwidth); margin:18px auto 0; display:flex; align-items:center; gap:12px; padding:0 20px; }
+    .nav-link {
+      background:var(--card); border-radius:8px; padding:8px 12px; text-decoration:none; color:var(--primary); font-weight:600;
+      box-shadow: 0 2px 6px rgba(29,54,86,0.04);
+    }
+
+    .container { max-width:var(--maxwidth); margin:18px auto; padding:20px; }
+
+    .card {
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow: 0 6px 18px rgba(12,41,80,0.04);
+      margin-bottom:18px;
+    }
+
+    /* Search & actions */
+    .toolbar { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    .search {
+      display:flex; gap:8px; align-items:center;
+    }
+    input[type="text"], input[type="number"], input[type="email"] {
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #e6e9ee;
+      min-width:220px;
+      font-size:14px;
+    }
+    .btn {
+      background:var(--primary);
+      color:white;
+      padding:10px 14px;
+      border-radius:8px;
+      text-decoration:none;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      display:inline-block;
+    }
+    .btn.alt { background:transparent; color:var(--primary); border:1px solid #e6e9ee; font-weight:600; }
+    .btn.danger { background:var(--danger); }
+
+    table { width:100%; border-collapse:collapse; margin-top:12px; }
+    th, td { padding:12px 10px; text-align:left; border-bottom:1px solid #f1f4f8; font-size:14px; }
+    th { color:#34495e; font-weight:700; font-size:13px; }
+    td .muted { color:var(--muted); font-size:13px; }
+    .actions { display:flex; gap:8px; }
+
+    .badge {
+      padding:6px 8px; border-radius:999px; font-weight:700; font-size:12px; display:inline-block;
+    }
+    .badge.paid { background:rgba(39,174,96,0.12); color:var(--success); }
+    .badge.pending { background:rgba(231,76,60,0.08); color:var(--danger); }
+
+    footer { max-width:var(--maxwidth); margin:26px auto 40px; text-align:center; color:var(--muted); font-size:13px; }
+
+    /* Responsive */
+    @media (max-width:800px) {
+      header .wrap { flex-direction:column; align-items:flex-start; gap:8px; }
+      th, td { font-size:13px; }
+      input[type="text"] { min-width:140px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div>
+      <h1>🏨 Hostel Management</h1>
+      <p>Clean, deployable admin dashboard</p>
+    </div>
+    <div style="text-align:right;">
+      <small>Production-ready • Flask + MySQL</small>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div style="width:100%; max-width:var(--maxwidth); padding:0 20px;">
+    <a href="/" class="nav-link">Dashboard</a>
+    <a href="/add" class="nav-link">Add Student</a>
+  </div>
+</nav>
+
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="card" style="border-left:6px solid {% if category=='success' %}#27ae60{% elif category=='danger' %}#e74c3c{% else %}#2980b9{% endif %}; margin-bottom:12px;">
+          <strong style="display:block;margin-bottom:6px;">{{ msg }}</strong>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</div>
+
+<footer>
+  © {{ now().year }} Hostel Management • Built with Flask
+</footer>
+
+</body>
+</html>
+

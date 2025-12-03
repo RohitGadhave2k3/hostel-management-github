@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:750px;">
+  <h3 style="margin-top:0;">{{ action }} Student</h3>
+
+  {% if student %}
+  <form method="post" action="" style="display:grid; gap:12px; grid-template-columns:1fr 1fr;">
+    <div>
+      <label>ID (cannot change)</label><br/>
+      <input type="number" name="id" value="{{ student.id }}" readonly style="background:#f7fafc;" />
+    </div>
+    <div>
+      <label>Name</label><br/>
+      <input type="text" name="name" value="{{ student.name }}" required />
+    </div>
+    <div>
+      <label>Room</label><br/>
+      <input type="text" name="room" value="{{ student.room }}" required />
+    </div>
+    <div>
+      <label>Phone</label><br/>
+      <input type="text" name="phone" value="{{ student.phone or '' }}" />
+    </div>
+    <div style="grid-column:1 / -1">
+      <label>Email</label><br/>
+      <input type="email" name="email" value="{{ student.email or '' }}" />
+    </div>
+
+    <div style="grid-column:1 / -1; display:flex; gap:10px; margin-top:6px;">
+      <button class="btn" type="submit">{{ action }}</button>
+      <a class="btn alt" href="/">Cancel</a>
+    </div>
+  </form>
+
+  {% else %}
+  <!-- Add form -->
+  <form method="post" style="display:grid; gap:12px; grid-template-columns:1fr 1fr;">
+    <div>
+      <label>ID</label><br/>
+      <input type="number" name="id" required />
+    </div>
+    <div>
+      <label>Name</label><br/>
+      <input type="text" name="name" required />
+    </div>
+    <div>
+      <label>Room</label><br/>
+      <input type="text" name="room" required />
+    </div>
+    <div>
+      <label>Phone</label><br/>
+      <input type="text" name="phone" />
+    </div>
+    <div style="grid-column:1 / -1">
+      <label>Email</label><br/>
+      <input type="email" name="email" />
+    </div>
+
+    <div style="grid-column:1 / -1; display:flex; gap:10px; margin-top:6px;">
+      <button class="btn" type="submit">{{ action }}</button>
+      <a class="btn alt" href="/">Cancel</a>
+    </div>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}
+

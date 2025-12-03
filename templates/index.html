@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="toolbar">
+    <div class="search">
+      <form method="get" action="/" style="display:flex; gap:8px; align-items:center;">
+        <input type="text" name="keyword" placeholder="Search by ID, name, room or phone..." value="{{ keyword | default('') }}" />
+        <button class="btn" type="submit">Search</button>
+        <a class="btn alt" href="/">Reset</a>
+      </form>
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <a class="btn" href="/add">+ Add Student</a>
+    </div>
+  </div>
+
+  <table aria-label="Students table">
+    <thead>
+      <tr>
+        <th style="width:90px">ID</th>
+        <th>Name</th>
+        <th>Room</th>
+        <th>Contact</th>
+        <th style="width:140px">Fees</th>
+        <th style="width:220px">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td><strong>{{ s.id }}</strong></td>
+        <td>{{ s.name }}</td>
+        <td class="muted">{{ s.room }}</td>
+        <td>
+          <div class="muted">{{ s.phone or '—' }}</div>
+          <div class="muted" style="font-size:13px;">{{ s.email or '' }}</div>
+        </td>
+        <td>
+          {% if s.fees_paid %}
+            <span class="badge paid">Paid</span>
+          {% else %}
+            <span class="badge pending">Pending</span>
+          {% endif %}
+        </td>
+        <td>
+          <div class="actions">
+            {% if not s.fees_paid %}
+              <a class="btn" href="/pay/{{ s.id }}">Mark Paid</a>
+            {% endif %}
+            <a class="btn alt" href="/edit/{{ s.id }}">Edit</a>
+            <a class="btn danger" href="/delete/{{ s.id }}">Delete</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if students|length == 0 %}
+    <p style="margin-top:16px; color:#7b8794;">No students found.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
