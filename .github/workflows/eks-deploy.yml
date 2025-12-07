@@ -60,12 +60,15 @@ jobs:
     # -----------------------------
     # Deploy to EKS
     # -----------------------------
+    # -----------------------------
+# Deploy to EKS
+# -----------------------------
     - name: Deploy to EKS
       run: |
-        echo "Updating image in Kubernetes deployment..."
-        
-        kubectl set image deployment/hostel-deployment \
-          hostel-web=${IMAGE_URI}
-
         echo "Applying all k8s manifests..."
         kubectl apply -f k8s/
+
+        echo "Updating image in Kubernetes deployment..."
+        kubectl set image deployment/hostel-deployment \
+          hostel-web=${IMAGE_URI} --record
+
