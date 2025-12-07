@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hostel-web
-        image: REPLACE_LATER_BY_GITHUB_ACTION
+        image: 502710547370.dkr.ecr.us-east-1.amazonaws.com/hostel-web:latest
         ports:
           - containerPort: 5000
         env:
