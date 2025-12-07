@@ -63,7 +63,10 @@ jobs:
     - name: Deploy to EKS
       run: |
         echo "Applying all k8s manifests..."
-        kubectl apply -f k8s/
+        kubectl apply -f k8s/mysql-pvc.yml
+        kubectl apply -f k8s/mysql-deployment.yml
+        kubectl apply -f k8s/deployment.yml
+        kubectl apply -f k8s/service.yml
 
         echo "Updating image in Kubernetes deployment..."
         kubectl set image deployment/hostel-deployment \
