@@ -19,7 +19,7 @@ spec:
           - containerPort: 5000
         env:
           - name: DB_HOST
-            value: "hostel-db.default.svc.cluster.local"
+            value: "hostel-db"
           - name: DB_PORT
             value: "3306"
           - name: DB_NAME
