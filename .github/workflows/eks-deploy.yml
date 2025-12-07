@@ -57,10 +57,7 @@ jobs:
           --region ${{ secrets.AWS_REGION }} \
           --name ${{ secrets.EKS_CLUSTER_NAME }}
 
-    # -----------------------------
-    # Deploy to EKS
-    # -----------------------------
-    # -----------------------------
+   
 # Deploy to EKS
 # -----------------------------
     - name: Deploy to EKS

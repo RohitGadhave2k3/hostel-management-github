@@ -1,7 +1,22 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: hostel-service
+# spec:
+#   selector:
+#     app: hostel
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 5000
+#   type: LoadBalancer
+
 apiVersion: v1
 kind: Service
 metadata:
   name: hostel-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "classic"  # optional
 spec:
   selector:
     app: hostel
