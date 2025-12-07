@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 import os
 from flask import Flask, request, render_template, flash, url_for, redirect
@@ -28,6 +29,7 @@ except mysql.connector.Error as e:
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET", "dev-secret-change-me")
 
+
 def get_conn():
     return cnxpool.get_connection()
 
@@ -35,6 +37,15 @@ def get_conn():
 def inject_now():
     return {"now": datetime.utcnow}
 
+def init_db_with_retry(retries=5, delay=10):
+    for i in range(retries):
+        try:
+            init_db()
+            return
+        except Exception as e:
+            print(f"DB init failed ({i+1}/{retries}): {e}")
+            time.sleep(delay)
+    raise SystemExit("Could not initialize DB after retries")
 # ✅ Auto-create database tables
 def init_db():
     conn = get_conn()
@@ -195,6 +206,7 @@ def delete_student(sid):
     return render_template("confirm_delete.html", student=student)
 
 init_db()
+init_db_with_retry()
 
 if __name__ == "__main__":
     debug = os.getenv("FLASK_DEBUG", "0") == "1"
