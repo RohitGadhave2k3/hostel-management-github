@@ -16,12 +16,13 @@ kind: Service
 metadata:
   name: hostel-service
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "classic"  # optional
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"    # NLB is faster and stable
 spec:
+  type: LoadBalancer
   selector:
     app: hostel
   ports:
-    - protocol: TCP
+    - name: http
       port: 80
       targetPort: 5000
-  type: LoadBalancer
