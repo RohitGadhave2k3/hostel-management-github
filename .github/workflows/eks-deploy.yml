@@ -72,3 +72,12 @@ jobs:
         kubectl set image deployment/hostel-deployment \
           hostel-web=${IMAGE_URI} --record
 
+    - name: Skip applying storageclass if gp2 exists
+      run: |
+        if ! kubectl get storageclass gp2 >/dev/null 2>&1; then
+          kubectl apply -f k8s/storageclass.yml
+        else
+          echo "StorageClass gp2 exists; skipping apply."
+        fi
+
+
